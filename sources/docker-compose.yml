@@ -1,0 +1,23 @@
+version: '2'
+services:
+
+  webservice:
+    image: unterstein/dcos-microservices-web:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - articleservice
+      - basketservice
+      - checkoutservice
+
+  checkoutservice:
+    image: unterstein/dcos-microservices-checkout:latest
+    depends_on:
+      - articleservice
+      - basketservice
+
+  articleservice:
+    image: unterstein/dcos-microservices-article:latest
+
+  basketservice:
+    image: unterstein/dcos-microservices-basket:latest
