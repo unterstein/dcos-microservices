@@ -1,14 +1,18 @@
 version: '2'
 services:
 
-  webservice:
-    image: unterstein/dcos-microservices-web:latest
+  proxy:
+    image: unterstein/dcos-microservices-proxy:latest
     ports:
       - "8080:80"
     depends_on:
+      - checkoutservice
       - articleservice
       - basketservice
-      - checkoutservice
+      - webservice
+
+  webservice:
+    image: unterstein/dcos-microservices-web:latest
 
   checkoutservice:
     image: unterstein/dcos-microservices-checkout:latest

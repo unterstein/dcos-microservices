@@ -9,4 +9,5 @@ cd ..
 ./ArticleService/build.sh
 ./BasketService/build.sh
 ./CheckoutService/build.sh
+./Proxy/build.sh
 ./WebService/build.sh
