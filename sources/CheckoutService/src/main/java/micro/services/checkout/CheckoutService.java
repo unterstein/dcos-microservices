@@ -42,7 +42,7 @@ public class CheckoutService extends Jooby {
       Checkout checkout = req.body().to(Checkout.class);
 
       // get basket and remove this one
-      HttpDelete delete = new HttpDelete("http://basketservice:8082/basket/");
+      HttpDelete delete = new HttpDelete("http://" + getConfiguredUrl("HOST_BASKETSERVICE", "basketservice") + ":8082/basket/");
       delete.setHeader("X-Request-Id", ServiceCommons.getRequestId(req));
       delete.setHeader("X-Session-Id", ServiceCommons.getSessionId(req));
       CloseableHttpResponse deleteResponse = client.execute(delete);
@@ -50,7 +50,7 @@ public class CheckoutService extends Jooby {
 
       // change quantity of articles from stock
       for (CheckoutArticle article : checkoutBasket.articles) {
-        HttpPost post = new HttpPost("http://articleservice:8081/articles/checkout/" + article.id);
+        HttpPost post = new HttpPost("http://" + getConfiguredUrl("HOST_ARTICLESERVICE", "articleservice") + ":8081/articles/checkout/" + article.id);
         post.setHeader("X-Request-Id", ServiceCommons.getRequestId(req));
         post.setHeader("X-Session-Id", ServiceCommons.getSessionId(req));
         post.setHeader("Content-Type", "application/json");
@@ -69,6 +69,13 @@ public class CheckoutService extends Jooby {
       ServiceCommons.afterRequest(req);
       return result;
     });
+  }
+
+  private static final String getConfiguredUrl(String envName, String defaultValue) {
+    String result = System.getenv(envName);
+    if (result == null)
+      result = System.getProperty(envName, defaultValue);
+    return result;
   }
 
   public static void main(final String[] args) throws Exception {
