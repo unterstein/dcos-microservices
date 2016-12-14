@@ -99,10 +99,10 @@
          "instances":1,
          "container":{
             "type":"DOCKER",
-            "forcePullImage": true,
             "docker":{
                "image":"unterstein/dcos-microservices-checkout:latest",
                "network":"BRIDGE",
+               "forcePullImage": true,
                "portMappings":[
                   {
                      "hostPort":0,
