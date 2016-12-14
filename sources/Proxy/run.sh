@@ -20,4 +20,9 @@ if [ -n "${HOST_WEBSERVICE:-}" ]; then
    sed -i "s/webservice/$HOST_WEBSERVICE/g" /etc/nginx/conf.d/default.conf
 fi
 
+if [ -n "${VERSION:-}" ]; then
+	echo "Setting version"
+   echo $VERSION > /usr/share/nginx/html/index.html
+fi
+
 nginx -g "daemon off;"

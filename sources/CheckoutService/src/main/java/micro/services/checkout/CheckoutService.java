@@ -24,6 +24,8 @@ public class CheckoutService extends Jooby {
 
   private static final Logger log = LoggerFactory.getLogger(CheckoutService.class);
 
+  private static boolean healthy = true;
+
   {
     use(new Gzon());
 
@@ -64,6 +66,18 @@ public class CheckoutService extends Jooby {
 
       rsp.send(ServerAnswer.ok());
     }).produces(MediaType.json);
+
+    put("/health", (req, rsp) -> {
+      healthy = !healthy;
+      rsp.send("Toggled health, now: " + healthy);
+    });
+
+    get("/health", (req, rsp) -> {
+      if (!healthy) {
+        throw new RuntimeException("meh!");
+      }
+      rsp.send("healthy");
+    });
 
     after((req, rsp, result) -> {
       ServiceCommons.afterRequest(req);
