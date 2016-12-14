@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "muh"
-echo $HOST_ARTICLESERVICE
 if [ -n "${HOST_ARTICLESERVICE:-}" ]; then
 	echo "Replacing articleservice"
    sed -i "s/articleservice/$HOST_ARTICLESERVICE/g" /etc/nginx/conf.d/default.conf
