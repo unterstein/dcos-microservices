@@ -21,6 +21,7 @@ To see the presentation, just open the pdf file in the presentation folder or go
 - Three services, bundled together with docker-compose
 - A web app consuming this services, serving static html files
 - One proxy to get all services together
+![alt demo](demo.png "demo architecture")
 
 # Get this demo working locally
 - You need mvn, java, docker and docker-compose to be installed on your machine.
